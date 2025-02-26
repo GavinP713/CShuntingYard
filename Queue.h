@@ -1,15 +1,16 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "LinkedNode.h"
+#include "DoublyNode.h"
 
 class Queue {
  public:
-  void enqueue();
-  void dequeue();
+  Queue();
+  void enqueue(int value);
+  int dequeue();
  private:
-  LinkedNode* head;
-  LinkedNode* tail;
-}
+  DoublyNode* head;
+  DoublyNode* tail;
+};
 
 #endif

@@ -1,0 +1,6 @@
+#include "SinglyNode.h"
+
+SinglyNode::LinkedNode(int _value) {
+  next = nullptr;
+  value = _value;
+}

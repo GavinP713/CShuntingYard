@@ -1,0 +1,5 @@
+#include "LinkedNode.h"
+
+LinkedNode::LinkedNode() {
+  next = nullptr;
+}

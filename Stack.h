@@ -1,15 +1,15 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include "LinkedNode.h"
+#include "SinglyNode.h"
 
 class Stack {
  public:
-  void push();
-  voud pop();
-  void peek();
+  void push(int value);
+  void pop();
+  SinglyNode* peek();
  private:
-  LinkedNode* head;
-}
+  SinglyNode* head;
+};
 
 #endif

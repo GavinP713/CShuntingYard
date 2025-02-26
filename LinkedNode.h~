@@ -1,0 +1,13 @@
+#ifndef LINKEDNODE_H
+#define LINKEDNODE_H
+
+#include "LinkedNode.h"
+
+class LinkedNode {
+ public:
+  LinkedNode(int _value);
+  LinkedNode* next;
+  int value;
+}
+
+#endif
