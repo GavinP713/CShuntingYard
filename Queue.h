@@ -6,8 +6,8 @@
 class Queue {
  public:
   Queue();
-  void enqueue(int value);
-  int dequeue();
+  void enqueue(char value);
+  char dequeue();
  private:
   DoublyNode* head;
   DoublyNode* tail;

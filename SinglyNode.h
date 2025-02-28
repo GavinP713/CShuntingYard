@@ -5,9 +5,9 @@
 
 class SinglyNode {
  public:
-  SinglyNode(int _value);
+  SinglyNode(char _value);
   SinglyNode* next;
-  int value;
+  char value;
 };
 
 #endif

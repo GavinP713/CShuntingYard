@@ -1,0 +1,15 @@
+#ifndef SHUNTINGYARD_H
+#define SHUNTINGYARD_H
+
+#include "Stack.h"
+#include "Queue.h"
+
+class ShuntingYard {
+ public:
+  void input(char expression[128]);
+ private:
+  Queue output;
+  Stack operators;
+}
+
+#endif

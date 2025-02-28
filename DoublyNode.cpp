@@ -1,6 +1,6 @@
 #include "DoublyNode.h"
 
-DoublyNode::DoublyNode(int _value) {
+DoublyNode::DoublyNode(char _value) {
   next = nullptr;
   previous = nullptr;
   value = _value;

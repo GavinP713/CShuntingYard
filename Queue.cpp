@@ -7,7 +7,7 @@ Queue::Queue() {
   tail = nullptr;
 }
 
-void Queue::enqueue(int value) {
+void Queue::enqueue(char value) {
   DoublyNode* newNode = new DoublyNode(value);
 
   // create initial links
@@ -28,14 +28,14 @@ void Queue::enqueue(int value) {
   tail = newNode;
 }
 
-int Queue::dequeue() {
+char Queue::dequeue() {
   if (head == nullptr) {
     cout << "Queue is empty" << endl;
     return 0;
   }
   else {
     // save value of head so it can return after head is deleted from memory
-    int value = head->value;
+    char value = head->value;
 
     // last node in queue
     if (head->previous == nullptr) {

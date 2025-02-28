@@ -3,10 +3,10 @@
 
 class DoublyNode {
  public:
-  DoublyNode(int _value);
+  DoublyNode(char _value);
   DoublyNode* next;
   DoublyNode* previous;
-  int value;
+  char value;
 };
 
 #endif

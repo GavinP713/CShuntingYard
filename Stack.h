@@ -5,7 +5,7 @@
 
 class Stack {
  public:
-  void push(int value);
+  void push(char value);
   void pop();
   SinglyNode* peek();
  private:

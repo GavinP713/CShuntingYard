@@ -1,6 +1,6 @@
 #include "SinglyNode.h"
 
-SinglyNode::SinglyNode(int _value) {
+SinglyNode::SinglyNode(char _value) {
   next = nullptr;
-  value = _value;
+  value = _vxsalue;
 }
