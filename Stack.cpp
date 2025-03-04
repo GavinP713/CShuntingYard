@@ -1,17 +1,19 @@
 #include "Stack.h"
 
-void Stack::push(int value) {
+void Stack::push(char value) {
   SinglyNode* newNode = new SinglyNode(value);
   newNode->next = head;
   head = newNode;
 }
 
-void Stack::pop() {
+SinglyNode* Stack::pop() {
   SinglyNode* newHead = head->next;
-  
-  delete head;
+  SinglyNode* oldHead = head;
 
+  // update link
   head = newHead;
+  
+  return oldHead;
 }
 
 SinglyNode* Stack::peek() {

@@ -6,7 +6,7 @@
 class Stack {
  public:
   void push(char value);
-  void pop();
+  SinglyNode* pop();
   SinglyNode* peek();
  private:
   SinglyNode* head;

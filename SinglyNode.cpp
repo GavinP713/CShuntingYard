@@ -2,5 +2,5 @@
 
 SinglyNode::SinglyNode(char _value) {
   next = nullptr;
-  value = _vxsalue;
+  value = _value;
 }

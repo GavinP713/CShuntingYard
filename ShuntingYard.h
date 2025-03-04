@@ -3,10 +3,11 @@
 
 #include "Stack.h"
 #include "Queue.h"
+using namespace std;
 
 class ShuntingYard {
  public:
-  void input(char input[128]);
+  void input(string input);
 };
 
 #endif
