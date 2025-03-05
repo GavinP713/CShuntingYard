@@ -1,14 +1,14 @@
 #include <iostream>
-#include "Stack.h"
+#include "ExpressionTree.h"
 using namespace std;
 
-void Stack::push(char value) {
+void ExpressionTree::push(TreeNode* value) {
   SinglyNode* newNode = new SinglyNode(value);
   newNode->next = head;
   head = newNode;
 }
 
-SinglyNode* Stack::pop() {
+SinglyNode* ExpressionTree::pop() {
   SinglyNode* oldHead = head;
 
   // update link
@@ -17,6 +17,6 @@ SinglyNode* Stack::pop() {
   return oldHead;
 }
 
-SinglyNode* Stack::peek() {
+SinglyNode* ExpressionTree::peek() {
   return head;
 }

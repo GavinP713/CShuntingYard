@@ -16,7 +16,7 @@ int precedence (char token, vector<symbol> table);
 string associativity(char token, vector<symbol> table);
 
 int main() {
-  string tokens = "1+2";
+  string tokens = "1+2*3+5";
   Queue* output = new Queue();
   Stack* stack = new Stack();
 
@@ -33,7 +33,7 @@ int main() {
   // shunting yard algorithm:
   for (int i = 0; i < tokens.length(); i++) {
     char token = tokens[i];
-    cout << "- i=" << i << " " << token << endl;
+    cout << "- i=" << i << " " << "\"" << token << "\"" << endl;
     
     // token is a number
     // (dec value of char ranges between 0-9 in ascii)
@@ -58,21 +58,29 @@ int main() {
       }
       else {
 	cout << "-- token is an operator" << endl;
+	
 	// quick references and "refactoring" for convenience sake       
 	char o1 = token;
-	char o2 = stack->peek()->value; // ! seg fault when head is initially null !
+	char o2; // ! seg fault when head is initially null !
 
-	while (o2 != '(' && (precedence(o2, table) > precedence(o1, table) || (precedence(o1, table) == precedence(o2, table) && associativity(o1, table) == "left"))) {
-	  cout << "--- popping to output" << endl;
-	  output->enqueue(stack->pop()->value);
+	while (stack->peek() != nullptr) {
+	  o2 = stack->peek()->value;
+	  if (o2 != '(' && (precedence(o2, table) > precedence(o1, table) || (precedence(o1, table) == precedence(o2, table) && associativity(o1, table) == "left"))) {
+	    cout << "--- popping to output" << endl;
+	    output->enqueue(stack->pop()->value);
+
+	    if (stack->peek() != nullptr) o2 = stack->peek()->value;
+	    else break;
+	  }
+	  else break;
 	}
 
-	output->enqueue(token); 
+	stack->push(token); 
       }     
     }
   }
   cout << "loop done, popping stack to output" << endl;
-  
+
   // put rest of stack onto output
   while(stack->peek() != nullptr) {
     cout << "- pop(" << stack->peek()->value << ")" << endl;
@@ -80,11 +88,8 @@ int main() {
   }
 
   // print output
-  cout << output->dequeue();
-  cout << output->dequeue();
-  cout << output->dequeue();
-  cout << output->dequeue();
-  cout << output->dequeue();
+  cout << "printing output: " << endl;
+  while (output->dequeue() != 0);
   
   return 1;
 }

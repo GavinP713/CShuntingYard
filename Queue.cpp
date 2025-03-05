@@ -30,7 +30,7 @@ void Queue::enqueue(char value) {
 
 char Queue::dequeue() {
   if (head == nullptr) {
-    cout << "Queue is empty" << endl;
+    //cout << "Queue is empty" << endl;
     return 0;
   }
   else {
@@ -55,7 +55,8 @@ char Queue::dequeue() {
       delete head;
       head = newHead;
     }
-  
+
+    cout << value << endl;
     return value;
   }
 }
