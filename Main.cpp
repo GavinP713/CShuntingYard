@@ -3,7 +3,8 @@
 #include <vector>
 #include "Stack.h"
 #include "Queue.h"
-#include "ShuntingYard.h"
+#include "TreeStack.h"
+#include "TreeStackSinglyNode.h"
 using namespace std;
 
 struct symbol {
@@ -14,6 +15,7 @@ struct symbol {
 
 int precedence (char token, vector<symbol> table);
 string associativity(char token, vector<symbol> table);
+void printTree(TreeNode* node, int depth);
 
 int main() {
   string tokens = "1+2*3+5";
@@ -33,40 +35,31 @@ int main() {
   // shunting yard algorithm:
   for (int i = 0; i < tokens.length(); i++) {
     char token = tokens[i];
-    cout << "- i=" << i << " " << "\"" << token << "\"" << endl;
     
     // token is a number
     // (dec value of char ranges between 0-9 in ascii)
     if (int(token) >= 48 && int(token) <= 57) {
-      cout << "-- token is a number, popping to output" << endl;
       output->enqueue(token);
     }
     // assumes anything else is an operator
     else {
       if (token == '(') {
-	cout << "-- token is a left parantheses, pushing to stack" << endl;
 	stack->push(token);
       }
       else if (token == ')') {
-	cout << "-- token is a right parantheses" << endl;
 	while (stack->peek()->value != '(') {
-	  cout << "--- popping to output" << endl;
 	  output->enqueue(stack->pop()->value);
 	}
-	cout << "-- discarding final parentheses" << endl;
 	delete stack->pop();
       }
       else {
-	cout << "-- token is an operator" << endl;
-	
 	// quick references and "refactoring" for convenience sake       
 	char o1 = token;
-	char o2; // ! seg fault when head is initially null !
+	char o2;
 
 	while (stack->peek() != nullptr) {
 	  o2 = stack->peek()->value;
 	  if (o2 != '(' && (precedence(o2, table) > precedence(o1, table) || (precedence(o1, table) == precedence(o2, table) && associativity(o1, table) == "left"))) {
-	    cout << "--- popping to output" << endl;
 	    output->enqueue(stack->pop()->value);
 
 	    if (stack->peek() != nullptr) o2 = stack->peek()->value;
@@ -79,17 +72,36 @@ int main() {
       }     
     }
   }
-  cout << "loop done, popping stack to output" << endl;
-
+  
   // put rest of stack onto output
+  cout << "loop done, popping stack to output" << endl;
   while(stack->peek() != nullptr) {
-    cout << "- pop(" << stack->peek()->value << ")" << endl;
     output->enqueue(stack->pop()->value);
   }
 
-  // print output
-  cout << "printing output: " << endl;
-  while (output->dequeue() != 0);
+  // create expression tree
+  TreeStack* treeStack = new TreeStack();
+  char token = output->dequeue();
+  while (int(token) != 0) { // while not an end line
+    // number
+    if (int(token) >= 48 && int(token) <= 57) {
+      TreeNode* node = new TreeNode(token);
+      treeStack->push(node);
+    }
+    // operator
+    else {
+      // parent first two nodes under operator
+      TreeNode* node = new TreeNode(token);
+      node->left = treeStack->pop()->value;
+      node->right = treeStack->pop()->value;
+      
+      treeStack->push(node);
+    }
+  }
+
+  // print stack
+  cout << "printing tree: " << endl;
+  printTree(treeStack->peek()->value, 0);
   
   return 1;
 }
@@ -112,4 +124,34 @@ string associativity(char token, vector<symbol> table) {
 
   // token does not match any symbol in table
   return "";
+}
+
+void printTree(TreeNode* node, int depth) {
+  if (node->right->value != '\t') { // check for null
+    printTree(node->right, depth + 1);
+  }
+
+  for (int a = 0; a < depth; a++) {
+    cout << '\t';
+  }
+
+  cout << node->value << endl;
+
+  if (node->left->value != '\t') { // check for null
+    printTree(node->left, depth + 1);
+  }
+
+  /*if (getRight(pos) < last) { // check for null 
+    print(getRight(pos), depth + 1);
+  }
+  
+  for (int a = 0; a < depth; a++) {
+    cout << '\t';
+  }
+  
+  cout << tree->peek()->value->value << endl;
+  
+  if (getLeft(pos) < last) { // check for null
+    print(getLeft(pos), depth + 1);
+    }*/
 }

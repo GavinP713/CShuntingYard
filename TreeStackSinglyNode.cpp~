@@ -1,0 +1,4 @@
+#include "TreeStackSinglyNode.h"
+#include "TreeNode.h"
+
+TreeStackSinglyNode::TreeStackSinglyNode(TreeNode* _value)
