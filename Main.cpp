@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstring>
 #include "Stack.h"
 #include "Queue.h"
 #include "TreeStack.h"
@@ -18,14 +19,17 @@ string associativity(char token, vector<symbol> table);
 void printTree(TreeNode* node, int depth);
 
 int main() {
-  string tokens = "1+2*3+5";
+  cout << "enter infix equation with no spaces" << endl;
+  char tokens[128];
+  cin >> tokens;
+
   Queue* output = new Queue();
   Stack* stack = new Stack();
 
   // create operator table
   vector<symbol> table = {
     { '^', 4, "right" },
-    { 'x', 3, "left" },
+    { '*', 3, "left" },
     { '/', 3, "left" },
     { '+', 2, "left" },
     { '-', 2, "left" },
@@ -33,13 +37,17 @@ int main() {
   };
   
   // shunting yard algorithm:
-  for (int i = 0; i < tokens.length(); i++) {
+  for (int i = 0; i < 128; i++) {
     char token = tokens[i];
     
     // token is a number
     // (dec value of char ranges between 0-9 in ascii)
     if (int(token) >= 48 && int(token) <= 57) {
       output->enqueue(token);
+    }
+    // end of expression
+    else if (int(token) == 0) {
+      break;
     }
     // assumes anything else is an operator
     else {
@@ -74,11 +82,10 @@ int main() {
   }
   
   // put rest of stack onto output
-  cout << "loop done, popping stack to output" << endl;
   while(stack->peek() != nullptr) {
     output->enqueue(stack->pop()->value);
   }
-
+  
   // create expression tree
   TreeStack* treeStack = new TreeStack();
   char token = output->dequeue();
@@ -97,10 +104,11 @@ int main() {
       
       treeStack->push(node);
     }
+    token = output->dequeue();
   }
-
+  
   // print stack
-  cout << "printing tree: " << endl;
+  cout << "expression tree: " << endl;
   printTree(treeStack->peek()->value, 0);
   
   return 1;
@@ -127,7 +135,7 @@ string associativity(char token, vector<symbol> table) {
 }
 
 void printTree(TreeNode* node, int depth) {
-  if (node->right->value != '\t') { // check for null
+  if (node->right != nullptr) { // check for null
     printTree(node->right, depth + 1);
   }
 
@@ -137,21 +145,7 @@ void printTree(TreeNode* node, int depth) {
 
   cout << node->value << endl;
 
-  if (node->left->value != '\t') { // check for null
+  if (node->left != nullptr) { // check for null
     printTree(node->left, depth + 1);
   }
-
-  /*if (getRight(pos) < last) { // check for null 
-    print(getRight(pos), depth + 1);
-  }
-  
-  for (int a = 0; a < depth; a++) {
-    cout << '\t';
-  }
-  
-  cout << tree->peek()->value->value << endl;
-  
-  if (getLeft(pos) < last) { // check for null
-    print(getLeft(pos), depth + 1);
-    }*/
 }

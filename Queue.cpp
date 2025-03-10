@@ -29,10 +29,12 @@ void Queue::enqueue(char value) {
 }
 
 char Queue::dequeue() {
+  // queue empty, return endline
   if (head == nullptr) {
     //cout << "Queue is empty" << endl;
-    return 0;
+    return char(0);
   }
+  // queue not empty, return head
   else {
     // save value of head so it can return after head is deleted from memory
     char value = head->value;
