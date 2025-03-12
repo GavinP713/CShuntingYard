@@ -186,7 +186,7 @@ void printInfix(TreeNode* node) {
     printInfix(node->right);
   }
 
-  cout << node->value << endl;;
+  cout << node->value << endl;
 
   if (node->left != nullptr) {
     printInfix(node->left);
