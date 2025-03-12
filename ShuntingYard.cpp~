@@ -1,7 +1,0 @@
-#include <iostream>
-#include "ShuntingYard.h"
-using namespace std;
-
-void ShuntingYard::input(char expression[128]) {
-  
-}
