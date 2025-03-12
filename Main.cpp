@@ -25,38 +25,50 @@ void printPrefix(TreeNode* node);
 
 int main() {
   while (true) {
-  cout << "enter infix equation with no spaces" << endl;
-  char input[128];
-  cin >> input;
+    cout << "enter infix equation with no spaces" << endl;
+    char input[128];
+    cin >> input;
 
-  // run shunting yard algorithm and get the output queue
-  Queue* output = shuntingYard(input);
+    // run shunting yard algorithm and get the output queue
+    Queue* output = shuntingYard(input);
   
-  // create expression tree
-  TreeStack* tree = createExpressionTree(output);
+    // create expression tree
+    TreeStack* tree = createExpressionTree(output);
+    
+    // printing
+    while (true) {
+      cout << "enter print command: \t \"tree\" \t \"infix\" \t \"postfix\" \t \"prefix\"" << endl;
+      cin >> input;
+  
+      if (strcmp(input, "tree") == 0) {
+	printTree(tree->peek()->value, 0);
+      }
+      else if (strcmp(input, "infix") == 0) {
+	printInfix(tree->peek()->value);
+      }
+      else if (strcmp(input, "postfix") == 0) {
+	printPostfix(tree->peek()->value);    
+      }
+      else if (strcmp(input, "prefix") == 0) {
+	printPrefix(tree->peek()->value);
+      }
+      cout << endl;
 
-  cout << "enter print command: \t \"tree\" \t \"infix\" \t \"postfix\" \t \"prefix\"" << endl;
-  cin >> input;
-  
-  if (strcmp(input, "tree") == 0) {
-    printTree(tree->peek()->value, 0);
-  }
-  else if (strcmp(input, "infix") == 0) {
-    printInfix(tree->peek()->value);
-  }
-  else if (strcmp(input, "postfix") == 0) {
-    printPostfix(tree->peek()->value);    
-  }
-  else if (strcmp(input, "prefix") == 0) {
-    printPrefix(tree->peek()->value);
-  }
-  cout << endl;
+      // quit / continue print commands
+      cout << "continue print commads?    y/n" << endl;
+      cin >> input;
+      if (strcmp(input, "n") == 0) break;
+    }
 
-  cout << "continue?    y/n" << endl;
-  cin >> input;
-  if (strcmp(input, "n") == 0) return 1;
+    // quit / continue loop
+    cout << "new equation?    y/n" << endl;
+    cin >> input;
+    if (strcmp(input, "n") == 0) {
+      delete output;
+      delete tree;
+      return 1;
+    }
   }
-  
   return 1;
 }
 
@@ -123,6 +135,7 @@ Queue* shuntingYard(char input[128]) {
     output->enqueue(stack->pop()->value);
   }
 
+  delete stack;
   return output;
 }
 
