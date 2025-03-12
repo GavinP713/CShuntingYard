@@ -24,6 +24,7 @@ void printPostfix(TreeNode* node);
 void printPrefix(TreeNode* node);
 
 int main() {
+  while (true) {
   cout << "enter infix equation with no spaces" << endl;
   char input[128];
   cin >> input;
@@ -37,17 +38,23 @@ int main() {
   cout << "enter print command: \t \"tree\" \t \"infix\" \t \"postfix\" \t \"prefix\"" << endl;
   cin >> input;
   
-  if (strcmp(input, "tree")) {
+  if (strcmp(input, "tree") == 0) {
     printTree(tree->peek()->value, 0);
   }
-  else if (strcmp(input, "infix")) {
+  else if (strcmp(input, "infix") == 0) {
     printInfix(tree->peek()->value);
   }
-  else if (strcmp(input, "postfix")) {
+  else if (strcmp(input, "postfix") == 0) {
     printPostfix(tree->peek()->value);    
   }
-  else if (strcmp(input, "prefix")) {
+  else if (strcmp(input, "prefix") == 0) {
     printPrefix(tree->peek()->value);
+  }
+  cout << endl;
+
+  cout << "continue?    y/n" << endl;
+  cin >> input;
+  if (strcmp(input, "n") == 0) return 1;
   }
   
   return 1;
@@ -186,7 +193,7 @@ void printInfix(TreeNode* node) {
     printInfix(node->right);
   }
 
-  cout << node->value << endl;;
+  cout << node->value;
 
   if (node->left != nullptr) {
     printInfix(node->left);
@@ -206,5 +213,13 @@ void printPostfix(TreeNode* node) {
 }
 
 void printPrefix(TreeNode* node) {
-
+  cout << node->value;
+  
+  if (node->right != nullptr) {
+    printPrefix(node->right);
+  }
+  
+  if (node->left != nullptr) {
+    printPrefix(node->left);
+  }
 }

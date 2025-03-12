@@ -58,7 +58,6 @@ char Queue::dequeue() {
       head = newHead;
     }
 
-    cout << value << endl;
     return value;
   }
 }
